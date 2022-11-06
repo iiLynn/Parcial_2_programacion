@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito</title>
+    <link href="https://file.myfontastic.com/tc26fJHv8scB3d4vHQRRsV/icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/estilos.css">
+    <link rel="stylesheet" href="css/skeleton.css">
+    <link rel="stylesheet" href="css/custom.css">
+    <link rel="stylesheet" href="css/normalize.css">
+</head>
+<body>
+
+    <nav>
+        <input type="checkbox" id="check">
+        <label for="check" class="checkbtn">
+            <i class="fas fa-bars"></i>
+        </label>
+        <a href="#" class="enlace">
+            <img src="images/logo.png" alt="" class="logo">
+        </a>
+        <ul>
+            <li><a class="active" href="menu.html">Inicio</a></li>
+            <li><a href="datos.html">Datos</a></li>
+            <li><a href="#">Pedidos</a></li>
+            <li><a href="index.html">Cerrar Sesion</a></li>
+        </ul>
+    </nav>
+    <section>
+    </section>
+    
+
+    <main>
+        
+        <h1>.</h1>
+        <div id="lista-cafe" class="container">
+           
+        </div>
+      
+        <script>
+            window.onload = function cargarcomentarios(){
+    $.get("http://localhost:3001/consultar-pedidos",(respuesta, status)=>{
+                        if(respuesta.resp.length>0){
+
+                            respuesta.resp.forEach(pedidos => {
+
+                                if(pedidos.id_usuarios == localStorage.getItem("id")){
+                                
+                                let div = document.createElement("DIV");
+                                let div1 = document.createElement("DIV");
+                                let div2 = document.createElement("DIV");
+                                let div3 = document.createElement("DIV");
+                                let img = document.createElement("IMG");
+                                let p1 = document.createElement("P")
+                                let h4 = document.createElement("h4");
+                                let P2 = document.createElement("P");
+                                let P3 = document.createElement("P");
+                                div.classList.add("four-columns");
+                                div1.classList.add("card");
+                                div2.classList.add("row");
+                                div3.classList.add("info-card");
+                                h4.classList.add("h4");
+                                p1.classList.add("p");
+                                P2.classList.add("p");
+                                P3.classList.add("p");
+                                P2.setAttribute("class", "precio")
+                                img.setAttribute("src", pedidos.img_url);
+                                img.setAttribute("class", "u-full-width");
+                                p1.textContent = pedidos.descripcion;
+                                P2.textContent = pedidos.precio;
+                                P3.textContent = localStorage.getItem("dir");
+                                h4.textContent = pedidos.nombre;
+                                div2.appendChild(div);
+                                div.appendChild(div1);
+                                div1.appendChild(img);
+                                div1.appendChild(div3);
+                                div3.appendChild(h4);
+                                div3.appendChild(p1);
+                                div3.appendChild(P2);
+                                div3.appendChild(P3)
+                                document.querySelector(".container").appendChild(div2);
+                                }
+                    });
+                    }else{
+                    $("#msgComentario")
+                            .removeClass("alert-success")
+                            .addClass("alert-danger");
+                    }
+                    setTimeout(()=>{
+                        $("#msgComentario").addClass("d-none");
+                    },5000);
+                    }, "json");
+    }
+        </script>
+    <script src="js/jquery.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>

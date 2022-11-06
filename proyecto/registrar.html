@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="style.css">
+  <title>Formulario Registro</title>
+</head>
+<body>
+  <form class="form-register">
+    <h4>Formulario Registro</h4>
+    <input pattern="[A-zÑñáéíóú ]{6,75}" class="controls"  required  type="text" name="nombres" id="nombres" placeholder="Ingrese su Nombre">
+    <input pattern="[A-zÑñáéíóú ]{6,75}" class="controls" required type="text" name="apellidos" id="apellidos" placeholder="Ingrese su Apellido">
+    <input class="controls" required type="email" name="correo" id="correo" placeholder="Ingrese su Correo">
+    <input class="controls" required type="password" name="contraseña" id="contra" placeholder="Ingrese su Contraseña">
+    <input class="controls" required type="text" name="direccion" id="direccion" placeholder="Direccion">
+    <p>1 <a href="#">1</a></p>
+    <button type="submit" class="botons" data-accion="nuevo" id="btregistrar" data-id_usuarios="0">Registrar</button> 
+    <p><a href="index.html">¿Ya tengo Cuenta?</a></p>
+  </form>
+  
+
+  <script>
+    document.getElementById("btregistrar").addEventListener("click",()=>{
+      if ($("#nombres").val()=="" ||$("#apellidos").val()=="" || $("#correo").val() == "" || $("#contra").val() == "" || $("#direccion").val()== "" ) {
+        
+      }else{
+        let accion = "nuevo",
+      nombre = $("#nombres").val(),
+      apellido = $("#apellidos").val(),
+      correo = $("#correo").val(),
+      contra = $("#contra").val(),
+      direccion = $("#direccion").val(),
+      datos = {accion, nombre, apellido, correo, contra, direccion};
+      $.post("http://localhost:3001/usuario",JSON.stringify(datos), (respuesta, status)=>{
+          }, "json");
+          alert("usuario resgistrado exitosamente");
+      }
+    });
+
+  </script>
+  <script src="js/jquery.js"></script>
+  <script src="js/script.js"></script>
+</body>
+</html>
