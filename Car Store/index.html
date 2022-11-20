@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="style1.css">
+  </head>
+  <body>
+    <form class="form-login">
+      <h5>Iniciar Seccion</h5>
+      <input class="controls" required type="text" name="Correo" value="" id="correo" placeholder="Correo">
+      <input class="controls" required type="password" name="contrasena" value="" id="contra" placeholder="Contraseña">
+      <a href="#"><input class="buttons"  type="submit" name="button" value="Ingresar" id="ingresar"></a>
+      <p><a href="registrar.html">¿no tienes cuenta? ¡crea una!</a></p>
+    </form>
+    <div class="row g-2">
+      <div id="msgComentario" class="alert alert-success d-none" role="alert"></div>
+  </div>
+  
+
+    <script>
+      mensaje= "Correo o contraseña incorrecta";
+      document.getElementById("ingresar").addEventListener("click",()=>{
+
+        correo = document.getElementById("correo").value;
+        contra = document.getElementById("contra").value;
+
+        $.get("http://localhost:3001/consultar-usuario",(respuesta, status)=>{
+                        if(respuesta.resp.length>0){
+
+                            respuesta.resp.forEach(usuario => {
+                              if(correo==usuario.correo){
+                                if(contra==usuario.contra){
+                                  mensaje = "Bienvenido";
+                                  location.href = "menu.html";
+                                  localStorage.setItem("textvalue", usuario.nombre);
+                                  localStorage.setItem("id", usuario.idUsuario);
+                                  localStorage.setItem("dir", usuario.direccion);
+                                }
+                              }    
+                    });
+                    alert(mensaje);
+                    }
+                    }, "json");
+                    
+      });
+    </script>
+
+<script src="js/jquery.js"></script>
+<script src="js/script.js"></script>
+  </body>
+</html>

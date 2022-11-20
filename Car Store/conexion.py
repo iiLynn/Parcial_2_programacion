@@ -1,31 +1,28 @@
-import mysql.connector 
+import mysql.connector
 
 class conexion:
     def __init__(self):
-        self.conexion = mysql.connector.connect(user='root', password='123456',
-                                                host='localhost', 
-                                                database='pedidos',
-                                                port='3306')
-
-        if self.conexion.is_connected():
-            print('Conectado exitosamente a la base de datos')
+        self.db = mysql.connector.connect(
+            host='localhost',
+            port=3306,
+            user='root',
+            passwd='',
+            database='db_academica'
+        )
+        if self.db.is_connected():
+            print("Conexion establecida con exito")
         else:
-            print('Error al conectar a la base de datos')
-    
+            print("Error en la conexion")
     def consultar(self, sql):
-        try:
-            cursor = self.conexion.cursor(dictionary=True)
-            cursor.execute(sql)
-            resultado = cursor.fetchall()
-            return resultado
-        except Exception as e:
-            return str(e)
+        cursor = self.db.cursor(dictionary=True)
+        cursor.execute(sql)
+        return cursor.fetchall()
 
     def ejecutar_consulta(self, sql, val):
         try:
-            cursor = self.conexion.cursor()
+            cursor = self.db.cursor()
             cursor.execute(sql, val)
-            self.conexion.commit()
-            return "Envio con exito"
+            self.db.commit()
+            return "ok"
         except Exception as e:
             return str(e)
